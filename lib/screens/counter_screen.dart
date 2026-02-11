@@ -9,8 +9,13 @@ class CounterScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
     // 👀 watch the counter value
     final count = ref.watch(counterProvider);
+
+    // Watch only one state not the whole state
+    final counter = ref.watch(counterProvider.select((counter) => counter.isEven));
+
 
     return Scaffold(
       appBar: AppBar(title: const Text('Riverpod Counter')),
@@ -44,6 +49,10 @@ class CounterScreen extends ConsumerWidget {
             },
             child: const Icon(Icons.refresh),
           ),
+
+          const SizedBox(height: 10),
+          // Rebuild selectively not watching the entier state
+          Text('Is Even: $counter')
         ],
       ),
     );
